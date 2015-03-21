@@ -1,14 +1,21 @@
-<p id="notice"><%= notice %></p>
+<h1> <%= @post.title %></h1>
+<%= @post.text %>
+<h2> Comments</h2>
 
+<% @post.comments.each do |comment| %>
+    <p> <%= comment.text %> </p>
+    <p> <%= time_ago_in_words comment.created_at %> ago </p>
+    <p> <%= link_to 'Delete comment', @post, method: :delete, confirm: 'Are you sure?' %></p>
+<%end%>
+
+<%= form_for [@post, @post.comments.build] do |f| %>
+    <p> <%= f.text_area :text, :size => "40x10" %></p>
+    <p> <%= f.submit "Post comment" %> </p>
+    <%end%>
 <p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
 
-<p>
-  <strong>Text:</strong>
-  <%= @post.text %>
-</p>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+<%= link_to "Back", posts_path %>
+<%= link_to "Edit", edit_post_path(@post) %>
+<%= link_to 'Delete post', posts_path, method: :delete, confirm: 'Are you sure?' %>
+    </p>
